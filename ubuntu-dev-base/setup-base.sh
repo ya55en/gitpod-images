@@ -27,7 +27,7 @@ echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/85custom
 apt-get -y dist-upgrade
 apt-get install -y tzdata locales sudo
 
-PACKAGES='bzip2 unzip unrar wget curl less'
+PACKAGES='bzip2 xz-utils zip unzip unrar wget curl less'
 PACKAGES="$PACKAGES git make build-essential"
 PACKAGES="$PACKAGES time htop less lsof vim bash-completion"
 PACKAGES="$PACKAGES gnupg2 ca-certificates"
@@ -51,10 +51,12 @@ sed -i.bkp -e 's|%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL|%sudo ALL=NOPASSWD:ALL|g' /
 sudo echo "@@@@@ Running 'sudo' for Gitpod: SUCCESS."
 
 # Create gitpod user local directory
-mkdir -p $GITPOD_HOME/.local/{bin,share}
+mkdir -p $GITPOD_HOME/.local/bin
+mkdir -p $GITPOD_HOME/.local/share
 
 # Create .bashrc.d directory and setup .bashrc to source anything in it
 mkdir $GITPOD_HOME/.bashrc.d/
+echo 'export PATH=$PATH:\$HOME/.local/bin' >> $GITPOD_HOME/.bashrc.d/setup-path.sh
 
 cat >> $GITPOD_HOME/.bashrc <<EOS
 

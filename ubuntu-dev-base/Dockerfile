@@ -3,6 +3,6 @@
 
 FROM ubuntu:20.04
 
-COPY setup.sh .
+COPY setup-base.sh .
 
-RUN ./setup.sh
+RUN ./setup-base.sh
